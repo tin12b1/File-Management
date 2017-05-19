@@ -16,6 +16,10 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fileManager=FileManager.default
+        let dirPaths:NSArray=NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true) as NSArray
+        documentDir=dirPaths[0] as? NSString
+        print("path : \(String(describing: documentDir))")
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -29,6 +33,7 @@ class ViewController: UIViewController {
         fileManager?.createFile(atPath: filePath! as String, contents: nil, attributes: nil)
         filePath = documentDir?.appendingPathComponent("file2.txt") as NSString?
         fileManager?.createFile(atPath: filePath! as String, contents: nil, attributes: nil)
+        print(filePath)
         self.showSuccessAlert(titleAlert: "Success", messageAlert: "File created successfully")
     }
     
@@ -81,9 +86,7 @@ class ViewController: UIViewController {
     
     @IBAction func btnReadFileClicked(sender: AnyObject)
     {
-        filePath =
-            
-            documentDir?.appendingPathComponent("/new/file1.txt") as NSString?
+        filePath = documentDir?.appendingPathComponent("/new/file1.txt") as NSString?
         var fileContent:NSData?
         fileContent=fileManager?.contents(atPath: filePath! as String) as NSData?
         let str:NSString=NSString(data: fileContent! as Data, encoding: String.Encoding.utf8.rawValue)!
